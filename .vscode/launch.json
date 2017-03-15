@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceRoot}\\counting_inversions\\countInversions.debug.js"
+      "program": "${workspaceRoot}\\quickSort\\quickSort.assignment.js"
     },
     {
       "type": "node",
