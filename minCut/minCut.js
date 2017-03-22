@@ -11,7 +11,7 @@ class Vertex {
 function findMinCut(vertices /*: Map<number, Vertex>*/) {
   const trials = [];
   const numberOfTrials = vertices.size * vertices.size;
-  for (let index = 0; index < 200*200; index++) {
+  for (let index = 0; index < numberOfTrials; index++) {
     trials.push(minCut(new Map(vertices)));
   }
   return Math.min(...trials);
@@ -33,12 +33,13 @@ function minCut(refVertices /*: Map<number, Vertex>*/) {
     removeElementFromArray(vertices.get(randomPointB).adjacentVertices, randomPointA.label);
 
     // Rearranging remaining edges
+    removeSelfLoops(vertices.get(randomPointB));
     randomPointA.adjacentVertices = [...randomPointA.adjacentVertices, ...vertices.get(randomPointB).adjacentVertices];
-    removeSelfLoops(randomPointA);
     vertices.get(randomPointB).adjacentVertices.forEach(adjacentVertex => {
         const index = vertices.get(adjacentVertex).adjacentVertices.indexOf(randomPointB);
         vertices.get(adjacentVertex).adjacentVertices[index] = randomPointA.label;
     });
+    removeSelfLoops(randomPointA);
     vertices.delete(randomPointB);
   }
   vertices.forEach(v => removeSelfLoops(v));

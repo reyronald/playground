@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {
   Vertex,
-  Edge,
+  findMinCut,
   minCut
 } = require('./minCut');
 const {
@@ -9,8 +9,7 @@ const {
   getVerticesFromString,
 } = require('./minCut.utils');
 
-
 // Reading input
 const vertices = getVerticesFromFile('./kargerMinCut.txt');
-
-console.log(vertices[0]);
+const result = findMinCut(vertices);
+console.log(result);

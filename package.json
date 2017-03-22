@@ -8,7 +8,7 @@
     "mocha": "^3.2.0"
   },
   "scripts": {
-    "test": "mocha quickSort/quickSort.spec.js"
+    "test": "mocha quickSort/quickSort.spec.js --slow 0"
   },
   "keywords": [],
   "author": "",
