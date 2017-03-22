@@ -17,7 +17,7 @@ const testCases = [
     ]),
     expected: 3
   },
-  { input: getVerticesFromFile('./kargerMinCut.txt'), expected: 17 },
+  // { input: getVerticesFromFile('./kargerMinCut.txt'), expected: 17 },
 ];
 
 describe('Karger Min Cut', function() {

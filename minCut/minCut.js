@@ -9,10 +9,19 @@ class Vertex {
 }
 
 function findMinCut(vertices /*: Map<number, Vertex>*/) {
+  const cloneVertices = vertices => {
+    const verticesCopy = new Map();
+    for (let [key, value] of vertices.entries()) {
+      verticesCopy.set(key, new Vertex(value.label, [...value.adjacentVertices]));
+    }
+    return verticesCopy;
+  };
+
   let numberOfTrials = vertices.size * vertices.size;
   let result = null;
   while (numberOfTrials--) {
-    const currentMinCut = minCut(vertices);
+    const verticesCopy = cloneVertices(vertices);
+    const currentMinCut = minCut(verticesCopy);
     if (result === null || currentMinCut < result) {
       result = currentMinCut;
     }
@@ -20,12 +29,7 @@ function findMinCut(vertices /*: Map<number, Vertex>*/) {
   return result;
 }
 
-function minCut(refVertices /*: Map<number, Vertex>*/) {
-  const vertices = new Map();
-  for (let [key, value] of refVertices.entries()) {
-    vertices.set(key, new Vertex(value.label, [...value.adjacentVertices]));
-  }
-
+function minCut(vertices /*: Map<number, Vertex>*/) {
   while (vertices.size > 2) {
     // Pick edge uniformly at random
     const randomPointA = pickRandomValueFromMap(vertices); 
@@ -52,7 +56,8 @@ function minCut(refVertices /*: Map<number, Vertex>*/) {
 
 function pickRandomValueFromMap(map) {
   const index = getRandom(map.size);
-  return map.get([...map.keys()][index]);
+  // return map.get([...map.keys()][index]);
+  return [...map.values()][index];
 }
 
 function pickRandomValueFromArray(array) {
