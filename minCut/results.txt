@@ -1,0 +1,32 @@
+rrey@RonaldRey MINGW64 /d/repos/playground/minCut (master)
+$ mocha minCut.spec.js --slow 0
+
+  Karger Min Cut
+    √ Case 1 (20ms)
+    √ Case 2 (6ms)
+    √ Case 3 (10ms)
+    √ Case 4 (4ms)
+    √ Case 5 (451ms)
+    √ Case 6 (1ms)
+    √ Case 7
+
+  7 passing (510ms)
+
+  ----------
+  W
+rrey@RonaldRey MINGW64 /d/repos/playground/minCut (master)
+$ mocha minCut.spec.js --slow 0
+
+  Karger Min Cut
+    √ Case 1 (22ms)
+    √ Case 2 (5ms)
+    √ Case 3 (7ms)
+    √ Case 4 (5ms)
+    √ Case 5 (471ms)
+    √ Case 6 (2ms)
+    √ Case 7
+    √ Case 8 (594072ms)
+
+  8 passing (10m)
+
+  ---------

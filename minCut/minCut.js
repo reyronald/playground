@@ -9,12 +9,15 @@ class Vertex {
 }
 
 function findMinCut(vertices /*: Map<number, Vertex>*/) {
-  const trials = [];
-  const numberOfTrials = vertices.size * vertices.size;
-  for (let index = 0; index < numberOfTrials; index++) {
-    trials.push(minCut(new Map(vertices)));
+  let numberOfTrials = vertices.size * vertices.size;
+  let result = null;
+  while (numberOfTrials--) {
+    const currentMinCut = minCut(vertices);
+    if (result === null || currentMinCut < result) {
+      result = currentMinCut;
+    }
   }
-  return Math.min(...trials);
+  return result;
 }
 
 function minCut(refVertices /*: Map<number, Vertex>*/) {
@@ -24,7 +27,7 @@ function minCut(refVertices /*: Map<number, Vertex>*/) {
   }
 
   while (vertices.size > 2) {
-    // Pick remaining edge uniformly at random
+    // Pick edge uniformly at random
     const randomPointA = pickRandomValueFromMap(vertices); 
     const randomPointB = pickRandomValueFromArray(vertices.get(randomPointA.label).adjacentVertices);
 
@@ -32,14 +35,15 @@ function minCut(refVertices /*: Map<number, Vertex>*/) {
     removeElementFromArray(randomPointA.adjacentVertices, randomPointB);
     removeElementFromArray(vertices.get(randomPointB).adjacentVertices, randomPointA.label);
 
-    // Rearranging remaining edges
-    removeSelfLoops(vertices.get(randomPointB));
-    randomPointA.adjacentVertices = [...randomPointA.adjacentVertices, ...vertices.get(randomPointB).adjacentVertices];
+    // Rearranging remaining edges to point to the first endpoint
     vertices.get(randomPointB).adjacentVertices.forEach(adjacentVertex => {
         const index = vertices.get(adjacentVertex).adjacentVertices.indexOf(randomPointB);
         vertices.get(adjacentVertex).adjacentVertices[index] = randomPointA.label;
     });
+
+    randomPointA.adjacentVertices = [...randomPointA.adjacentVertices, ...vertices.get(randomPointB).adjacentVertices];
     removeSelfLoops(randomPointA);
+    
     vertices.delete(randomPointB);
   }
   vertices.forEach(v => removeSelfLoops(v));
