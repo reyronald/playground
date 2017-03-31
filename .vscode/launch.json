@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceRoot}\\minCut\\minCut.debug.js"
+      "program": "${workspaceRoot}\\minCut2\\minCut2.js"
     },
     {
       "type": "node",
