@@ -4,18 +4,34 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    // {
+    //   "type": "node",
+    //   "request": "launch",
+    //   "name": "Launch Program",
+    //   "program": "${workspaceRoot}\\minCut2\\minCut2.js"
+    // },
+    // {
+    //   "type": "node",
+    //   "request": "attach",
+    //   "name": "Attach to Process",
+    //   "address": "localhost",
+    //   "port": 5858
+    // },
     {
-      "type": "node",
+      "name": "Python",
+      "type": "python",
+      "pythonPath":"${config:python.pythonPath}", 
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceRoot}\\minCut2\\minCut2.js"
-    },
-    {
-      "type": "node",
-      "request": "attach",
-      "name": "Attach to Process",
-      "address": "localhost",
-      "port": 5858
+      "stopOnEntry": true,
+      "console": "none",
+      "program": "${file}",
+      "cwd": "${workspaceRoot}",
+      "debugOptions": [
+          "WaitOnAbnormalExit",
+          "WaitOnNormalExit",
+          "RedirectOutput"
+      ],
+      "env": {"name":"value"}
     }
   ]
 }
