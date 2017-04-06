@@ -53,8 +53,6 @@ class Graph:
                 graph[self.f[vertex]].add(self.f[neighbor])
         self.graph = graph
 
-
-
 # def dfs(graph, start):
 #     visited, stack = set(), [start]
 #     while stack:
