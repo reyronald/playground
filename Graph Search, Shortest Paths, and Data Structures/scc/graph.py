@@ -1,3 +1,6 @@
+import sys
+sys.setrecursionlimit(1000000)
+
 class Graph:
     def __init__(self, graph):
         self.graph = graph
