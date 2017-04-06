@@ -13,6 +13,9 @@ class Graph:
     def scc(self):
         # reversed_graph = self.get_reverse_graph()
         self.dfs_loop()
+        self.traspose_graph()
+        self.explored = set()
+        self.dfs_loop()
         return
 
     def get_reverse_graph(self):
@@ -40,6 +43,16 @@ class Graph:
                 self.dfs(vertex2)
         self.t += 1
         self.f[vertex] = self.t
+
+    def traspose_graph(self):
+        graph = {}
+        for vertex in self.graph:
+            if self.f[vertex] not in graph:
+                graph[self.f[vertex]] = set()
+            for neighbor in self.graph[vertex]:
+                graph[self.f[vertex]].add(self.f[neighbor])
+        self.graph = graph
+
 
 
 # def dfs(graph, start):
