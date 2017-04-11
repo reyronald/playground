@@ -1,4 +1,7 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  "python.pythonPath": "C:\\Python27"
+  "python.pythonPath": "C:\\Python27",
+  "files.exclude": {
+    "**/*.pyc" : true
+  }
 }
