@@ -16,15 +16,16 @@ def from_file():
             instance.add_edge(head, tail, weight)
     return instance
 
-GRAPH = from_file()
+def get_answer():
+    graph = from_file()
 
-dist = GRAPH.dijkstra(1)
+    dist = graph.dijkstra(1)
 
-# print ','.join(map(str, dist.values()))
+    nodes_to_examine = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
+    node_distances = []
+    while nodes_to_examine:
+        node_distances.append(dist[nodes_to_examine.pop(0)])
 
-nodes_to_examine = [7,37,59,82,99,115,133,165,188,197]
-node_distances = []
-while nodes_to_examine:
-    node_distances.append(dist[nodes_to_examine.pop(0)])
+    return ','.join(map(str, node_distances))
 
-print ','.join(map(str, node_distances))
+print get_answer()
