@@ -22,12 +22,7 @@ def find_median(integers):
     result += -lows[0]
 
     for integer in integers:
-        low = -lows[0]
-        high = highs[0]
-
-        if integer < low:
-            heapq.heappush(lows, -integer)
-        elif integer > high:
+        if integer > highs[0]:
             heapq.heappush(highs, integer)
         else:
             heapq.heappush(lows, -integer)
@@ -36,8 +31,7 @@ def find_median(integers):
         if len(lows) - len(highs) > 1:
             temp = -heapq.heappop(lows)
             heapq.heappush(highs, temp)
-
-        if len(highs) > len(lows):
+        elif len(highs) > len(lows):
             temp = heapq.heappop(highs)
             heapq.heappush(lows, -temp)
 
