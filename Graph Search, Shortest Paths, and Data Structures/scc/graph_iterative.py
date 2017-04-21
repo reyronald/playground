@@ -1,28 +1,7 @@
 from collections import defaultdict
 
 class Graph:
-    @staticmethod
-    def create_from_dict(graph):
-        instance = Graph()
-        for vertex in graph:
-            for neighbor in graph[vertex]:
-                instance.add_edge(vertex, neighbor)
-        return instance
-
-    @staticmethod
-    def create_from_file(path):
-        instance = Graph()
-        testfile = open(path, 'r')
-        while testfile:
-            line = testfile.readline().rstrip()
-            if not line:
-                break
-            vertex, neighbor = line.split(" ")
-            instance.add_edge(int(vertex), int(neighbor))
-        return instance
-
     def __init__(self):
-        self.number_of_vertices = 0
         self.graph = defaultdict(set)
         self.reversed_graph = defaultdict(set)
         self.s = None
@@ -56,23 +35,21 @@ class Graph:
 
     def dfs_reverse(self, start, explored):
         stack = [start]
-        explored.add(start)
         explored_order = []
-
         while stack:
             vertex = stack.pop()
-            explored_order.append(vertex)
-            for neighbor in self.reversed_graph[vertex]:
-                if neighbor not in explored:
-                    stack.append(neighbor)
-                    explored.add(neighbor)
 
-        while explored_order:
-            vertex = explored_order.pop()
-            if not self.reversed_graph[vertex] - explored:
-                self.t += 1
-                self.f[vertex] = self.t
-                self.finishing_order.append(vertex)
+            if vertex not in explored:
+                explored.add(vertex)
+                stack.append(vertex)
+                for neighbor in self.reversed_graph[vertex]:
+                    if neighbor not in explored:
+                        stack.append(neighbor)
+            else:
+                if vertex not in self.finishing_order:
+                    self.t += 1
+                    self.f[vertex] = self.t
+                    self.finishing_order.append(vertex)
 
     def dfs_loop_second(self):
         self.traspose_graph()
@@ -99,3 +76,23 @@ class Graph:
         for vertex in self.reversed_graph:
             for neighbor in self.reversed_graph[vertex]:
                 self.graph[self.f[neighbor]].add(self.f[vertex])
+
+@staticmethod
+def create_from_dict(graph):
+    instance = Graph()
+    for vertex in graph:
+        for neighbor in graph[vertex]:
+            instance.add_edge(vertex, neighbor)
+    return instance
+
+@staticmethod
+def create_from_file(path):
+    instance = Graph()
+    testfile = open(path, 'r')
+    while testfile:
+        line = testfile.readline().rstrip()
+        if not line:
+            break
+        vertex, neighbor = line.split(" ")
+        instance.add_edge(int(vertex), int(neighbor))
+    return instance
