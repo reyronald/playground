@@ -58,35 +58,31 @@ class Graph:
 
     def dfs_reverse(self, start, explored):
         stack = [start]
-        finishing_times = [start]
         explored.add(start)
+        explored_order = []
+
         while stack:
             vertex = stack.pop()
-            all_neighbors_explored = True
+            explored_order.append(vertex)
             for neighbor in self.reversed_graph[vertex]:
                 if neighbor not in explored:
-                    all_neighbors_explored = False
-                    finishing_times.append(neighbor)
-                    explored.add(neighbor)
                     stack.append(neighbor)
+                    explored.add(neighbor)
 
-            if all_neighbors_explored:
-                element = finishing_times.pop()
-                self.finishing_order.append(element)
+        while explored_order:
+            vertex = explored_order.pop()
+            if not self.reversed_graph[vertex] - explored:
                 self.t += 1
-                self.f[element] = self.t
-        while finishing_times:
-            self.t += 1
-            element = finishing_times.pop()
-            self.finishing_order.append(element)
-            self.f[element] = self.t
+                self.f[vertex] = self.t
+                self.finishing_order.append(vertex)
+
         return
 
     def dfs_loop_second(self):
         self.traspose_graph()
         explored = set()
         while self.finishing_order:
-            vertex = self.finishing_order.pop()
+            vertex = self.f[self.finishing_order.pop()]
             if vertex not in explored:
                 self.s = vertex
                 self.dfs(vertex, explored)
