@@ -32,21 +32,19 @@ class Graph:
         self.finishing_order = []
         self.scc_count = {}
 
-    def add_edge(self, head, tail):
-        self.graph[head].add(tail)
-        self.reversed_graph[tail].add(head)
+    def add_edge(self, tail, head):
+        self.reversed_graph[head].add(tail)
 
-        if self.graph[tail] is None:
-            self.graph[tail] = set()
-        if self.reversed_graph[head] is None:
-            self.reversed_graph[head] = set()
+        if self.reversed_graph[tail] is None:
+            self.reversed_graph[tail] = set()
 
     def find_scc(self):
-        self.f = [0]*(len(self.graph) + 1)
+        self.f = [0]*(len(self.reversed_graph) + 1)
         self.dfs_loop_reverse()
         self.dfs_loop_second()
         sccs = self.scc_count.values()
         sccs.sort(reverse=True)
+        del sccs[5:]
         sccs = sccs + [0]*(5-len(sccs))
         return ','.join(map(str, sccs))
 
@@ -76,8 +74,6 @@ class Graph:
                 self.f[vertex] = self.t
                 self.finishing_order.append(vertex)
 
-        return
-
     def dfs_loop_second(self):
         self.traspose_graph()
         explored = set()
@@ -98,13 +94,8 @@ class Graph:
                 if neighbor not in explored:
                     explored.add(neighbor)
                     stack.append(neighbor)
-        return
 
     def traspose_graph(self):
-        graph = {}
-        for vertex in self.graph:
-            if self.f[vertex] not in graph:
-                graph[self.f[vertex]] = set()
-            for neighbor in self.graph[vertex]:
-                graph[self.f[vertex]].add(self.f[neighbor])
-        self.graph = graph
+        for vertex in self.reversed_graph:
+            for neighbor in self.reversed_graph[vertex]:
+                self.graph[self.f[neighbor]].add(self.f[vertex])
