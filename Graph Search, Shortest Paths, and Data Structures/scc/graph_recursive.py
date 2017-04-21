@@ -18,14 +18,23 @@ class Graph:
     def find_scc(self):
         # First DFS Pass
         self.f = [0]*(len(self.graph) + 1)
-        self.dfs_loop(lambda: [(yield vertex) for vertex in self.graph])
+        def on_finish(start):
+            """ Only relevant for first DFS Pass """
+            self.t += 1
+            self.f[start] = self.t
+            self.finishing_order.append(start)
+        self.dfs_loop(lambda: [(yield vertex) for vertex in self.graph], on_finish=on_finish)
 
         # Second DFS Pass
         self.traspose_graph()
         finishing_order = self.finishing_order[::-1]
         f = self.f[:]
         self.scc_count = defaultdict(lambda: 0)
-        self.dfs_loop(lambda: [(yield f[vertex]) for vertex in finishing_order])
+        def on_start():
+            """ Only relevant for second DFS Pass """
+            if self.s:
+                self.scc_count[self.s] = self.scc_count[self.s] + 1
+        self.dfs_loop(lambda: [(yield f[vertex]) for vertex in finishing_order], on_start=on_start)
 
         # Calculating Result
         sccs = self.scc_count.values()
@@ -34,29 +43,26 @@ class Graph:
         sccs = sccs + [0]*(5-len(sccs))
         return ','.join(map(str, sccs))
 
-    def dfs_loop(self, get_vector):
+    def dfs_loop(self, get_vector, on_start=lambda: None, on_finish=lambda *x: None):
         explored = set()
         for vertex in get_vector():
             if vertex not in explored:
                 # Only relevant for second DFS Pass
                 self.s = vertex
-                self.dfs_recursive(vertex, explored)
+                self.dfs_recursive(vertex, explored, on_start, on_finish)
 
-    def dfs_recursive(self, start, explored):
+    def dfs_recursive(self, start, explored, on_start, on_finish):
         explored.add(start)
 
         # Only relevant for second DFS Pass
-        if self.s:
-            self.scc_count[self.s] = self.scc_count[self.s] + 1
+        on_start()
 
         for neighbor in self.graph[start]:
             if neighbor not in explored:
-                self.dfs_recursive(neighbor, explored)
+                self.dfs_recursive(neighbor, explored, on_start, on_finish)
 
         # Only relevant for first DFS Pass
-        self.t += 1
-        self.f[start] = self.t
-        self.finishing_order.append(start)
+        on_finish(start)
 
     def traspose_graph(self):
         temp_graph = defaultdict(set)
