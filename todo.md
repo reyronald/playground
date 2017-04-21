@@ -14,3 +14,4 @@
     Balanced Binary Search Tree
     Red Black Tree
 - Improve runnign time of 2sum
+- Implement iterative DFS on SCC problem
