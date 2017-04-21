@@ -1,7 +1,7 @@
 # graph representations:
 # http://www.cs.princeton.edu/courses/archive/fall07/cos226/lectures/digraph.pdf
 
-from graph_recursive import Graph, create_from_file
+from graph_recursive import create_from_file
 
 ROOT = "d:/repos/playground/Graph Search, Shortest Paths, and Data Structures/scc/"
 

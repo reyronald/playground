@@ -5,13 +5,13 @@ import sys
 import threading
 import time
 
-from graph2 import Graph
+from graph_recursive import create_from_file
 sys.setrecursionlimit(10**6)
 threading.stack_size(2 ** 26)
 
 def scc():
     root = "d:/repos/playground/Graph Search, Shortest Paths, and Data Structures/scc/"
-    graph = Graph.create_from_file(root + "SCC.txt")
+    graph = create_from_file(root + "SCC.txt")
 
     start = time.time()
     result = graph.find_scc()

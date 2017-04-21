@@ -7,9 +7,8 @@ class Graph:
         self.s = None
         self.f = []
         self.t = 0
-        self.leaders = {}
         self.finishing_order = []
-        self.scc_count = {}
+        self.scc_count = defaultdict(lambda: 0)
 
     def add_edge(self, tail, head):
         self.reversed_graph[head].add(tail)
@@ -33,40 +32,38 @@ class Graph:
             if vertex not in explored:
                 self.dfs_reverse_recur(vertex, explored)
 
-    def dfs_reverse_recur(self, start, explored):
-        explored.add(start)
-        for neighbor in self.reversed_graph[start]:
-            if neighbor not in explored:
-                self.dfs_reverse_recur(neighbor, explored)
-        self.t += 1
-        self.f[start] = self.t
-        self.finishing_order.append(start)
-
     def dfs_loop_second(self):
         self.traspose_graph()
         explored = set()
-        while self.finishing_order:
-            vertex = self.f[self.finishing_order.pop()]
+        finishing_order = self.finishing_order[:]
+        f = self.f[:]
+        while finishing_order:
+            vertex = f[finishing_order.pop()]
             if vertex not in explored:
                 self.s = vertex
-                self.dfs(vertex, explored)
+                self.dfs_reverse_recur(vertex, explored)
 
-    def dfs(self, start, explored):
-        stack = [start]
+    def dfs_reverse_recur(self, start, explored):
         explored.add(start)
-        self.leaders[start] = self.s
-        while stack:
-            self.scc_count[self.s] = self.scc_count[self.s] + 1 if self.s in self.scc_count else 1
-            vertex = stack.pop()
-            for neighbor in self.graph[vertex]:
-                if neighbor not in explored:
-                    explored.add(neighbor)
-                    stack.append(neighbor)
+
+        if self.s:
+            self.scc_count[self.s] = self.scc_count[self.s] + 1
+
+        for neighbor in self.reversed_graph[start]:
+            if neighbor not in explored:
+                self.dfs_reverse_recur(neighbor, explored)
+
+        self.t += 1
+        self.f[start] = self.t
+        self.finishing_order.append(start)
 
     def traspose_graph(self):
         for vertex in self.reversed_graph:
             for neighbor in self.reversed_graph[vertex]:
                 self.graph[self.f[neighbor]].add(self.f[vertex])
+        self.reversed_graph = self.graph
+
+######################################
 
 def create_from_dict(graph):
     instance = Graph()
