@@ -27,14 +27,11 @@ class Graph:
 
         # Second DFS Pass
         self.traspose_graph()
-        finishing_order = self.finishing_order[::-1]
-        f = self.f[:]
-        self.scc_count = defaultdict(lambda: 0)
         def on_start():
             """ Only relevant for second DFS Pass """
-            if self.s:
-                self.scc_count[self.s] = self.scc_count[self.s] + 1
-        self.dfs_loop(lambda: [(yield f[vertex]) for vertex in finishing_order], on_start=on_start)
+            self.scc_count[self.s] = self.scc_count[self.s] + 1
+        self.dfs_loop(lambda: [(yield self.f[v]) for v in reversed(self.finishing_order)], \
+                        on_start=on_start)
 
         # Calculating Result
         sccs = self.scc_count.values()
