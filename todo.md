@@ -15,3 +15,4 @@
     Red Black Tree
 - Improve runnign time of 2sum
 - Implement iterative DFS on SCC problem
+- Improve Prim's Algorithm for spanning tree with heap
