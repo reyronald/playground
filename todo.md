@@ -16,3 +16,4 @@
 - Improve runnign time of 2sum
 - Implement iterative DFS on SCC problem
 - Improve Prim's Algorithm for spanning tree with heap
+- Implement Kruskal's algorithm with a Union Find (Disjoint Set)

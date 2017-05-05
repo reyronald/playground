@@ -6,16 +6,12 @@ class Graph:
     def __init__(self):
         self.graph = defaultdict(set)
         self.vertices = set()
-        self.graph_matrix = defaultdict(dict)
 
     def add_edge(self, head, tail, weight):
         self.graph[head].add((tail, weight))
         self.graph[tail].add((head, weight))
         self.vertices.add(head)
         self.vertices.add(tail)
-
-        self.graph_matrix[head][tail] = weight
-        self.graph_matrix[tail][head] = weight
 
     def mst(self, start):
         unvisited_nodes, dist, prev = self._initialize(start)
