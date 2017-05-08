@@ -36,7 +36,6 @@ class Edge:
     def __repr__(self):
         return str(self.first) + '-' + str(self.second) + ' ' + str(self.weight)
 
-
 class Graph:
     def __init__(self):
         self.edges = list()
