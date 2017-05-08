@@ -30,7 +30,7 @@ class DisjointSet:
             self.parents[y_root]['parent'] = x_root
             self.parents[x_root]['rank'] = self.parents[x_root]['rank'] + 1
 
-def read(path):
+def read_input(path):
     vertices_int = set()
     with open(path) as fin:
         _, number_of_bits = map(int, next(fin).rstrip().split(" "))
@@ -46,25 +46,23 @@ def generate_bitwise_set(number_of_bits):
         nums = set()
         for i in base:
             for j in range(0, n):
-                num = (1 << j) | i
-                if i != num:
-                    nums.add(num)
+                nums.add((1 << j) | i)
         return nums | base
     return shift_n_bits(number_of_bits, shift_n_bits(number_of_bits))
 
 def get_answer(path):
-    number_of_bits, vertices_int = read(path)
+    number_of_bits, vertices_int = read_input(path)
     bitwise_set = generate_bitwise_set(number_of_bits)
 
     disjointset = DisjointSet()
     for vertex in vertices_int:
         disjointset.make_set(vertex)
         for bitwise in bitwise_set:
-            x = vertex ^ bitwise
-            if x in vertices_int:
-                if not disjointset.in_set(x):
-                    disjointset.make_set(x)
-                disjointset.union(vertex, x)
+            bitwise_result = vertex ^ bitwise
+            if bitwise_result in vertices_int:
+                if not disjointset.in_set(bitwise_result):
+                    disjointset.make_set(bitwise_result)
+                disjointset.union(vertex, bitwise_result)
     return len(set([item['parent'] for item in disjointset.parents.itervalues()]))
 
 def test_case_1():
@@ -85,15 +83,15 @@ def test_case_3():
 def assignment():
     path = "D:\\repos\playground\Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming\Week 2\clustering\clustering_big.txt"
     answer = get_answer(path)
+    assert answer == 13172 # 13172 (9 seconds execution time)
     print answer
-
+    return answer 
 
 def main():
     test_case_1()
     test_case_2()
     test_case_3()
-    # assignment()
-    return
+    assignment()
 
 if __name__ == '__main__':
     main()
