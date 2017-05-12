@@ -1,3 +1,6 @@
+# Good documentation on this problem:
+# https://wincent.com/wiki/Computing_the_Maximum_Weighted_Independent_Set_of_a_graph_path
+ 
 def mwis(vertices):
     # Memoization Step
     max_weights = [0, vertices[1]]

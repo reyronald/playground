@@ -136,8 +136,8 @@ def assignment():
             alphabet.append(HuffmanTreeNode(node_number, int(line.rstrip())))
             node_number += 1
     huffman_code = HuffmanCode(alphabet).generate_huffman_coding()
-    assert huffman_code.min_codeword_length == 9
     assert huffman_code.max_codeword_length == 19
+    assert huffman_code.min_codeword_length == 9
 
 def main():
     test_case_0()
