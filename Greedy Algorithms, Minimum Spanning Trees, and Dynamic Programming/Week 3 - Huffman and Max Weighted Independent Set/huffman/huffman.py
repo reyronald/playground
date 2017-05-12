@@ -86,7 +86,6 @@ def test_case_1():
 
 def test_case_2():
     alphabet = [
-        HuffmanTreeNode(1, 10),
         HuffmanTreeNode(2, 37),
         HuffmanTreeNode(3, 59),
         HuffmanTreeNode(4, 43),
@@ -100,11 +99,10 @@ def test_case_2():
     ]
     huffman_code = HuffmanCode(alphabet).generate_huffman_coding()
     assert huffman_code.min_codeword_length == 2
-    assert huffman_code.max_codeword_length == 6
+    assert huffman_code.max_codeword_length == 5
 
 def test_case_3():
     alphabet = [
-        HuffmanTreeNode(1, 15),
         HuffmanTreeNode(2, 895),
         HuffmanTreeNode(3, 121),
         HuffmanTreeNode(4, 188),
@@ -123,12 +121,12 @@ def test_case_3():
     ]
     huffman_code = HuffmanCode(alphabet).generate_huffman_coding()
     assert huffman_code.min_codeword_length == 3
-    assert huffman_code.max_codeword_length == 7
+    assert huffman_code.max_codeword_length == 6
 
 def assignment():
     node_number = 1
     alphabet = []
-    with open("D:\\repos\playground\Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming\Week 3\huffman\huffman.txt") as fin:
+    with open("D:\\repos\playground\Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming\Week 3 - Huffman and Max Weighted Independent Set\huffman\huffman.txt") as fin:
         next(fin)
         for line in fin:
             if not line:
