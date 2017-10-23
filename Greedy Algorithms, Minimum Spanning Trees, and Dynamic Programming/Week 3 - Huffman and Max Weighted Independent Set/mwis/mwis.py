@@ -14,16 +14,16 @@ def mwis(vertices):
         # if max_weights[i-1] >= max_weights[i-2] + vertices[i]:
         #     i -= 1
         # else:
-        #     reconstructed_path.append(i+1)
+        #     reconstructed_path.append(i)
         #     i -= 2
 
         if max_weights[i] == max_weights[i-1]:
             i -= 1
         else:
-            reconstructed_path.append(i+1)
+            reconstructed_path.append(i)
             i -= 2
 
-    return max_weights[-1], list(reversed(reconstructed_path))
+    return max_weights[-1], reconstructed_path
 
 def get_answer(reconstructed_path):
     vertices_to_check = [1, 2, 3, 4, 17, 117, 517, 997]
@@ -51,8 +51,8 @@ def test_case_2():
     assert reconstructed_path == [2, 4, 7, 10]
 
 def read_input():
-    vertices = []
-    with open("D:\\repos\playground\Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming\Week 3\mwis\mwis.txt") as fin:
+    vertices = [None]
+    with open("e:\\repos\playground\Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming\Week 3 - Huffman and Max Weighted Independent Set\mwis\mwis.txt") as fin:
         next(fin)
         for line in fin:
             if not line:
@@ -64,13 +64,13 @@ def assignment():
     vertices = read_input()
     max_weight, reconstructed_path = mwis(vertices)
     answer = get_answer(reconstructed_path)
-    assert max_weight == 2953148316
-    assert answer == '01010110'
+    assert max_weight == 2955353732
+    assert answer == '10100110'
 
 def main():
     test_case_0()
-    test_case_1()
-    test_case_2()
+    # test_case_1()
+    # test_case_2()
     assignment()
 
 if __name__ == '__main__':

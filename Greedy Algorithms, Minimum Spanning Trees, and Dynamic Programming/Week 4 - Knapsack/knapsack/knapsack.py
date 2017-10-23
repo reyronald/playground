@@ -50,7 +50,7 @@ def assignment_2():
     knapsack_size, items = read("D:\\repos\playground\Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming\Week 4 - Knapsack\knapsack\knapsack_big.txt")
     answer = knapsack_big(knapsack_size, items)
     print answer
-    assert answer == 4243395 # 4243395 or 2595819
+    assert answer == 4243395
 
 def main():
     test_case_0()
